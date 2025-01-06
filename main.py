@@ -30,21 +30,24 @@ HELP:
 
 STATUS:
 /status - Displays status of machine
-/diskusage [du] - Displays disk usage
-/ramusage [ru] - Displays ram usage
-/systeminfo [si] - General system info
+/diskusage (/du) - Displays disk usage
+/ramusage (/ru) - Displays ram usage
+/systeminfo (/si) - General system info
 
 TASK MANAGER:
 /processes - List currently running processes
 /taskkill [pid] - Terminates the specified process
 
+FILE MANAGER:
+/download [path]- Downloads file from specified path
+
 NETWORK:
-/networkinfo (ni) - Basic information about network
+/networkinfo (/ni) - Basic information about network
 
 REMOTE CONTROL:
-/screenshot (screen) - Takes screenshot of every monitor
-/blockinput (bi) - Block input
-/unblockinput (ubi) - Unblocks input
+/screenshot (/screen) - Takes screenshot of every monitor
+/blockinput (/bi) - Block input
+/unblockinput (/ubi) - Unblocks input
 
 POWER:
 /lock - Locks machine
@@ -54,7 +57,7 @@ POWER:
 /shutdown - Shut's down the machine
 
 REMOTE SCRIPTING:
-/cmd - Executed given command into command prompt
+/cmd [command] - Executed given command into command prompt
 
 OTHER:
 /exit - Exits the application""")
@@ -468,10 +471,10 @@ def main():
     application.add_handler(CommandHandler("processes", processes_command))
     application.add_handler(CommandHandler("taskkill", taskkill_command))
 
-    # FILE EXPLORER
-    #application.add_handler(CommandHandler("fileexplorer", fileexplorer_command))
+    # FILE MANAGER
+    #application.add_handler(CommandHandler("filemanager", filemanager_command))
     #application.add_handler(CommandHandler("upload", upload_command))
-    #application.add_handler(CommandHandler("download", download_command))
+    application.add_handler(CommandHandler("download", download_command))
     #application.add_handler(CommandHandler("ftp", ftp_command))
 
     # NETWORK
