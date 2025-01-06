@@ -509,10 +509,10 @@ def main():
     # Run the bot with automatic reconnect
     while True:
         try:
-            print("LockFlowRC Info: Starting...")
+            print("LockFlow Info: Starting...")
             application.run_polling()
         except Exception as ex:
-            print(f"LockFlowRC Error: {ex}")
+            print(f"LockFlow Error: {ex}")
             time.sleep(5)
 
 if __name__ == "__main__":

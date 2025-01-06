@@ -1,5 +1,5 @@
-# LockFlowRC 💣
-LockFlowRC is a simple and lightweight Telegram bot for remotely controlling a Windows machine. It allows for secure and efficient remote access, providing an easy way to manage your PC from anywhere.
+# LockFlow 💣
+LockFlow is a simple and lightweight Telegram bot for remotely controlling a Windows machine. It allows for secure and efficient remote access, providing an easy way to manage your PC from anywhere.
 
 ![Logo](images/logo.png)
 
@@ -78,6 +78,9 @@ LockFlowRC is a simple and lightweight Telegram bot for remotely controlling a W
 ## **Contributing** ⭐
 Contributions are welcome! Please create a pull request or open an issue for any enhancements or bugs.
 
+## **Disclaimer**
+LockFlow is intended for educational and research purposes only. The author is not responsible for any misuse or damage caused by this software.
+
 ## **License**
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
@@ -85,3 +88,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - E-mail: [velimir.paleksic@gmail.com](velimir.paleksic@gmail.com).
 - VexSystems Github: [github.com/vexsystems](https://github.com/vexsystems).
 - VexSystems Instagram: [@vex.systems](https://www.instagram.com/vex.systems/).
+
+<details>
+<summary>Keywords (ignore):</summary>
+Remote Access Tool, Telegram Bot, Telegram Remote Access Bot, Windows Remote Control, System Management Bot, Lightweight Remote Access Tool, Open-Source Remote Bot, Telegram RAT, RAT, LockFlow, Remote Access, Remote Control, Windows Remote Access Tool, Windows Remote Access, Windows Tool, Remote Desktop Tool, Telegram Remote Desktop Bot, PC Management Bot, Windows RAT, Secure Remote Control, Remote PC Manager, Telegram System Tool, Telegram Command Bot, Windows System Tool, Remote Admin Tool, Remote PC Access, Remote Command Execution, Windows Automation Bot, PC Control Bot, Remote Access Automation, Telegram-Controlled RAT, Admin Control Bot, Remote Monitoring Bot, PC Access Tool, Lightweight Admin Bot
+</details>
