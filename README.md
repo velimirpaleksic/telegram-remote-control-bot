@@ -27,7 +27,7 @@ LockFlowRC is a simple and lightweight Telegram bot for remotely controlling a W
   - FILE EXPLORER:
     - [ ] /fileexplorer [path]: Opens a specific directory for browsing files and directories remotely
     - [ ] /upload [file] [path]: Allows users to upload files from their device to the remote machine
-    - [ ] /download [file]: Enables downloading files from the remote machine to the user's device
+    - [x] /download [file]: Enables downloading files from the remote machine to the user's device
     - [ ] /ftp [file] [server] [port] [username] [password]: Transfers files to/from a remote file server
 
   - NETWORK:

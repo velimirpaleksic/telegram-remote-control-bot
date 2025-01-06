@@ -210,10 +210,34 @@ async def taskkill_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_message(update, f"TaskKill Error: {ex}")
 
 # FILE EXPLORER
+async def download_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if UserAuthorized(update.message.chat_id):
+        try:
+            if len(context.args) == 0:
+                await send_message(update, "Usage: /download [file_path]")
+                return
+
+            # Get the file path from the command arguments
+            file_path = " ".join(context.args)
+
+            # Check if the file exists
+            if not os.path.exists(file_path):
+                await send_message(update, f"Error: File not found at path '{file_path}'.")
+                return
+
+            # Check if the path is a file
+            if not os.path.isfile(file_path):
+                await send_message(update, f"Error: Path '{file_path}' is not a file.")
+                return
+
+            # Send the file to the user
+            with open(file_path, "rb") as file:
+                await update.message.reply_document(file)
+        except Exception as ex:
+            await send_message(update, f"Download Error: {ex}")
 
 # NETWORK
 async def networkinfo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Displays current network settings and status (e.g., IP address, network speed, latency)."""
     if UserAuthorized(update.message.chat_id):
         try:
             # Get hostname and IP address
