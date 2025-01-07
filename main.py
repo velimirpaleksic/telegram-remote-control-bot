@@ -14,10 +14,11 @@ from tempfile import NamedTemporaryFile
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Bot token variables
+# Bot Variables
 BOT_TOKEN = "BOT_TOKEN_HERE"
 CHAT_ID = "YOUR_CHAT_ID_HERE"
 MESSAGE_LENGTH_LIMIT = 2048
+CURRENT_DIRECTORY = os.getcwd()
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if UserAuthorized(update.message.chat_id):
@@ -213,6 +214,75 @@ async def taskkill_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_message(update, f"TaskKill Error: {ex}")
 
 # FILE EXPLORER
+async def ls_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    Lists files and directories in the current or specified directory.
+
+    Usage: /ls [optional_path]
+    """
+    if UserAuthorized(update.message.chat_id):
+        try:
+            path = " ".join(context.args) if context.args else os.getcwd()
+
+            # Handle drive-only paths (e.g., "D:")
+            if len(path) == 2 and path[1] == ":":
+                path += "\\"
+
+            if not os.path.exists(path):
+                await send_message(update, f"Error: Path `{path}` does not exist.")
+                return
+            if not os.path.isdir(path):
+                await send_message(update, f"Error: Path `{path}` is not a directory.")
+                return
+
+            # List files and directories
+            items = os.listdir(path)
+            if items:
+                items_message = "\n".join(item for item in items)
+            else:
+                items_message = "Directory is empty."
+
+            await send_message(update, f"Contents of `{path}`:\n\n{items_message}")
+        except Exception as ex:
+            await send_message(update, f"LS Error: {str(ex)}")
+
+async def cd_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    Changes the current working directory, including switching drives.
+
+    Usage: /cd [path]
+    """
+    if UserAuthorized(update.message.chat_id):
+        try:
+            if len(context.args) == 0:
+                await send_message(update, "Usage: /cd [path]")
+                return
+
+            path = " ".join(context.args)
+
+            # Handle drive changes directly
+            if len(path) == 2 and path[1] == ":":
+                os.chdir(path)  # Switch to the root of the specified drive
+                await send_message(update, f"Changed directory to: `{path}\\`")
+                return
+
+            # Resolve the absolute path
+            new_directory = os.path.abspath(path)
+
+            # Validate the directory
+            if not os.path.exists(new_directory):
+                await send_message(update, f"Error: Path `{path}` does not exist.")
+                return
+            if not os.path.isdir(new_directory):
+                await send_message(update, f"Error: Path `{path}` is not a directory.")
+                return
+
+            # Change the current directory
+            os.chdir(new_directory)
+            await send_message(update, f"Changed directory to: `{new_directory}`")
+        except Exception as ex:
+            await send_message(update, f"CD Error: {str(ex)}")
+
 async def download_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if UserAuthorized(update.message.chat_id):
         try:
@@ -417,7 +487,7 @@ async def send_message(update: Update, message: str):
     try:
         # Check if the message length exceeds the limit
         if len(message) <= MESSAGE_LENGTH_LIMIT:
-            await update.message.reply_text(message, parse_mode="Markdown")
+            await update.message.reply_text(message, parse_mode="MarkdownV2")
         else:
             with NamedTemporaryFile(delete=False, mode="w", suffix=".txt") as temp_file:
                 temp_file.write(message)
@@ -472,7 +542,8 @@ def main():
     application.add_handler(CommandHandler("taskkill", taskkill_command))
 
     # FILE MANAGER
-    #application.add_handler(CommandHandler("filemanager", filemanager_command))
+    application.add_handler(CommandHandler("ls", ls_command))
+    application.add_handler(CommandHandler("cd", cd_command))
     #application.add_handler(CommandHandler("upload", upload_command))
     application.add_handler(CommandHandler("download", download_command))
     #application.add_handler(CommandHandler("ftp", ftp_command))
