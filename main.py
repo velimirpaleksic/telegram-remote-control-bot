@@ -548,6 +548,7 @@ def main():
     # FILE MANAGER
     application.add_handler(CommandHandler("ls", ls_command))
     application.add_handler(CommandHandler("cd", cd_command))
+    #application.add_handler(CommandHandler("delete", delete_command))
     #application.add_handler(CommandHandler("upload", upload_command))
     application.add_handler(CommandHandler("download", download_command))
     #application.add_handler(CommandHandler("ftp", ftp_command))
