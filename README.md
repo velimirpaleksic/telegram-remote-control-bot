@@ -27,7 +27,7 @@ LockFlow is a simple and lightweight Telegram bot for remotely controlling a Win
   - FILE MANAGER:
     - [x] /ls [path]: Lists the contents of the specified directory (not finished)
     - [x] /cd [path]: Changes the current working directory to the specified path (not finished)
-    - [ ] /delete [path]: Deletes the specified file or directory. Use with caution as it may not be reversible
+    - [x] /delete [path]: Deletes the specified file or directory. Use with caution as it may not be reversible
     - [ ] /upload [file] [path]: Allows users to upload files from their device to the remote machine
     - [x] /download [file]: Enables downloading files from the remote machine to the user's device
     - [ ] /ftp [file] [server] [port] [username] [password]: Transfers files to/from a remote file server
