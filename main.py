@@ -487,7 +487,7 @@ async def send_message(update: Update, message: str):
     try:
         # Check if the message length exceeds the limit
         if len(message) <= MESSAGE_LENGTH_LIMIT:
-            await update.message.reply_text(message, parse_mode="MarkdownV2")
+            await update.message.reply_text(message)
         else:
             with NamedTemporaryFile(delete=False, mode="w", suffix=".txt") as temp_file:
                 temp_file.write(message)
@@ -517,6 +517,10 @@ def UserAuthorized(chatID):
         return False
 
 def main():
+    if BOT_TOKEN == "BOT_TOKEN_HERE":
+        print("Please change BOT_TOKEN variable")
+        return
+
     # Create the bot application
     application = ApplicationBuilder().token(BOT_TOKEN).build()
 
