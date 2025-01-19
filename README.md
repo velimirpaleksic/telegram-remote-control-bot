@@ -1,5 +1,5 @@
 # LockFlow 💣
-LockFlow is a simple and lightweight Telegram bot for remotely controlling a Windows machine. It allows for secure and efficient remote access, providing an easy way to manage your PC from anywhere.
+LockFlow is a simple and lightweight Telegram RAT for remotely controlling a Windows machine. It allows for secure and efficient remote access, providing an easy way to manage your PC from anywhere.
 
 ![Logo](images/logo.png)
 
